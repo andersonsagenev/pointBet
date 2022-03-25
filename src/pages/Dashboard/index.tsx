@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { AsyncStorage } from 'react-native';
 import { HighlightCard } from '../../components/HighlightCard';
 import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard';
 import { 
@@ -14,7 +15,8 @@ import {
   HighlightCards, 
   Transactions, 
   Title, 
-  TransactionsList 
+  TransactionsList,
+  LogoutButton
 } from './styles';
 
 export interface DatalistProps extends TransactionCardProps {
@@ -22,6 +24,24 @@ export interface DatalistProps extends TransactionCardProps {
 }
 
 export function Dashboard() {
+  const dataKey = '@gofinance:transactions';
+
+  useEffect(() =>{
+    async function loadStorageData() {
+        const storageUser = await AsyncStorage.getItem(dataKey);
+       console.log('Storage', JSON.parse(storageUser!));
+         if(storageUser ) {
+             console.log('Storage', storageUser);
+         }
+        
+    }
+    loadStorageData();
+    // async function removeAll() {
+    //     await AsyncStorage.removeItem(dataKey);
+    // }
+    // removeAll();
+}, []);
+
 
   const data: DatalistProps[] = [
     {
@@ -86,7 +106,9 @@ export function Dashboard() {
               <UserName>Anderson</UserName>
             </User>
           </UserInfo>
-          <Icon name='power' />
+          <LogoutButton onPress={ () => {}}>
+            <Icon name='power' />
+          </LogoutButton>
         </UserWrapper>
       </Header>
 
