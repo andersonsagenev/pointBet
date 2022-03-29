@@ -5,9 +5,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 // import Icon from 'react-native-vector-icons/Ionicons';
 
-import { Profile } from '../pages/Profile';
 import { Dashboard } from '../pages/Dashboard';
 import { Register } from '../pages/Register';
+import { Resume } from '../pages/Resume';
 
 const TabRoutes = createBottomTabNavigator();
 
@@ -54,8 +54,8 @@ export function Tab() {
                 }}
             />
             <TabRoutes.Screen 
-                name="Profile" 
-                component={Profile} 
+                name="Resume" 
+                component={Resume} 
                 options={{
                     tabBarIcon: (({ color, size }) =>
                         <MaterialIcons

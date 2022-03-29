@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
 import { Modal, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
 import { useForm } from 'react-hook-form';
-import uuid from 'react-native-uuid';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { InputForm } from '../../components/Forms/InputForm';
 import { Button } from '../../components/Forms/Button';
 import { TransactionTypeButton } from '../../components/Forms/TransactionTypeButton';
 import { CategorySelectButton } from '../../components/Forms/CategorySelectButton';
 import { CategorySelect } from '../../pages/CategorySelect/';
-import { useeNavigation, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { 
     Container, 
     Form, 
@@ -37,7 +37,7 @@ const schema = Yup.object().shape({
     .required('O valor é obrigatório')
 }).required()
 
-export function Register() {
+export function Register(props: any) {
     const dataKey = '@gofinance:transactions';
     const [TransactionType, setTransactionType] = useState('');
     const [category, setCategory] = useState({
@@ -53,7 +53,7 @@ export function Register() {
     } = useForm({ resolver: yupResolver(schema)});
     const navigation = useNavigation()
 
-    function handleTransactionTypeSelect(type: 'up' | 'down') {
+    function handleTransactionTypeSelect(type: 'positive' | 'negative') {
         setTransactionType(type);
     }
     function handleOpenModal() {
@@ -76,7 +76,7 @@ export function Register() {
             id: String(uuid.v4()),
             name: form.name,
             amount: form.amount,
-            TransactionType,
+            type: TransactionType,
             category: category.key,
             date: new Date()
         }
@@ -100,7 +100,7 @@ export function Register() {
                 name: 'Categoria',
             });
 
-            navigation.navigate('Listagem');
+            props.navigation.navigate('Listagem');
 
             
         } catch (error) {
@@ -108,6 +108,15 @@ export function Register() {
                 Alert.alert('Não foi possível salvar')
         }
     }
+
+    // useEffect(() => {
+     
+    //     async function removeAll(){
+    //       await AsyncStorage.removeItem(dataKey)
+    //     }
+     
+    //     removeAll()
+    //    }, []);
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -138,14 +147,14 @@ export function Register() {
                             <TransactionTypeButton
                                 type="up"
                                 title="income"
-                                onPress={() => handleTransactionTypeSelect('up')}
-                                isActive={TransactionType === 'up'}
+                                onPress={() => handleTransactionTypeSelect('positive')}
+                                isActive={TransactionType === 'positive'}
                             />
                             <TransactionTypeButton
                                 type="down"
                                 title="Outcome"
-                                onPress={() => handleTransactionTypeSelect('down')}
-                                isActive={TransactionType === 'down'}
+                                onPress={() => handleTransactionTypeSelect('negative')}
+                                isActive={TransactionType === 'negative'}
                             />
                         </TransactionsType>
 
