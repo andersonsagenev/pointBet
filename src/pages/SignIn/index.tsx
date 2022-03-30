@@ -1,22 +1,33 @@
 import React, { useState } from 'react';
-import { TouchableHighlight, View, Text, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SignInContent } from '../../components/SignInContent';
 import { useAuth } from '../../hooks/auth';
-import { styles } from './styles';
-import { BtnColor } from '../../components/BtnColor';
-import { COLORS } from '../../theme';
-import BtnSocialLogin from '../../components/BtnSocialLogin/BtnSocialLogin';
-// import { useDispatch } from 'react-redux';
+import { RFValue } from 'react-native-responsive-fontsize';
 
-type AuthResponse = {
+import IllustrationSvg from '../../assets/illustration.svg';
+import AppleSvg from '../../assets/apple.svg';
+import GoogleSvg from '../../assets/google.svg';
+import { BtnSocialLogin } from '../../components/BtnSocialLogin';
+
+import {
+  Container,
+  Header,
+  TitleWrapper,
+  Title,
+  SignInTitle,
+  Footer,
+  FooterWrapper
+} from './styles';
+import { View } from 'moti';
+
+interface AuthResponse {
   type: string;
   params: {
     access_token: string;
   }
 }
 
-type LoginProps = {
+interface LoginProps {
   isLoading: boolean,
   errorMessage: string
 }
@@ -51,23 +62,49 @@ export function SignIn({ isLoading, errorMessage }: LoginProps) {
       email,
       password
     }
-    // return dispatch (loginStart(credentials))
   }
 
   return (
-    <View style={styles.container}>
+    <Container>
 
-      <SignInContent />
+      <Header>
+        <TitleWrapper>
+          <IllustrationSvg
+            width={RFValue(180)}
+            height={RFValue(180)}
+          />
+          <Title>
+            Controle suas  {'\n'}
+            finanças de forma {'\n'}
+            muito simples
+          </Title>
+        </TitleWrapper>
 
-      <TouchableHighlight style={styles.touch} onPress={() => console.log('facebook')}>
-        <BtnSocialLogin Provider='facebook' Icon='facebook' />
-      </TouchableHighlight>
-      <TouchableHighlight style={styles.touch} onPress={handleSignInGoogle}>
-        <BtnSocialLogin Provider='google' Icon='google' />
-      </TouchableHighlight>
+        <SignInTitle>
+          Faça seu login com {'\n'}
+          uma das contas abaixo
+        </SignInTitle>
+      </Header>
 
-      <Text style={{ color: '#c6c6c6' }}>ou</Text>
-      <View style={styles.textFields}>
+      <Footer>
+        <FooterWrapper>
+          <BtnSocialLogin
+            title="Entrar com Google"
+            svg={GoogleSvg}
+            onPress={() => console.log('Google')}
+          />
+
+          <BtnSocialLogin
+            title="Entrar com Apple"
+            svg={AppleSvg}
+            onPress={() => console.log('Apple')}
+          />
+
+        </FooterWrapper>
+
+      </Footer>
+
+      {/* <View style={styles.textFields}>
         <Text style={styles.text}>
           E-mail
         </Text>
@@ -78,30 +115,12 @@ export function SignIn({ isLoading, errorMessage }: LoginProps) {
         </Text>
         <TextInput label="Senha" autoCapitalize='none' secureTextEntry={true}
           value={password}
-          onChangeText={password => setPassword(password)} />
+          onChangeText={password => setPassword(password)} 
+        /> 
+        </View> */}
 
 
-
-        {/* <BtnColor
-          title='ENTRAR COM GOOGLE'
-          color={COLORS.WHITE}
-          backgroundColor={COLORS.GOOGLE}
-          icon="google"
-          onPress={handleSignInGoogle}
-          isLoading={isSigningIn}
-        />
-
-        <BtnColor
-          title='ENTRAR COM FACEBOOK'
-          color={COLORS.WHITE}
-          backgroundColor={COLORS.FACEBOOK}
-          icon="facebook-square"
-          onPress={handleSignInFacebook}
-          isLoading={isSigningInFace}
-        /> */}
-
-      </View>
-    </View>
+    </Container>
   );
-     
+
 }

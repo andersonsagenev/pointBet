@@ -1,23 +1,29 @@
-import { COLORS } from './../../theme/colors';
-import { StyleSheet } from 'react-native';
-import { FONTS } from '../../theme';
+import styled from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { RectButton } from 'react-native-gesture-handler';
 
-export const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        height: 56,
-        borderRadius: 8,
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    title: {
-        fontFamily: FONTS.BOLD,
-        fontSize: 15,
-        textAlign: 'center'
-    },
-    icon: {
-        marginRight: 12,
-        color: COLORS.FACEBOOK
-    }
-})
+
+export const Button = styled(RectButton)`
+    height: ${RFValue(56)}px ;
+    background-color: ${({ theme }) => theme.colors.shape} ;
+    border-radius: 5px ;
+    align-items: center ;
+    flex-direction: row ;
+    margin-bottom: 14px ;
+`;
+export const ImageContainer = styled.View`
+    height: 100% ;
+    justify-content: center ;
+    align-items: center ;
+    padding: ${RFValue(16)}px ;
+    border-color:  ${({ theme }) => theme.colors.background};
+    border-right-width: 1px;
+`;
+
+export const Text = styled.Text`
+    flex:1 ;
+    text-align: center;
+    font-family: ${({ theme }) => theme.fonts.medium}; 
+    font-size:  ${RFValue(14)}px ;
+`;
+

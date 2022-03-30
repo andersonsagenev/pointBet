@@ -14,10 +14,12 @@ export function Routes() {
 
     return (
         <NavigationContainer>
+
+            <SignIn />
            
-            {
+            {/* {
                user ? <AuthRoutes /> : <SignIn />
-            }
+            } */}
 
             {/* <Navigator headerMode="none">
                 <Screen

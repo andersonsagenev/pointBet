@@ -17,12 +17,12 @@ export const styles = StyleSheet.create({
   },
   subtitle: {
     fontFamily: FONTS.regular,
-    color: COLORS.text,
+    color: COLORS.TEXT,
     fontSize: 15,
   },
   description: {
     fontFamily: FONTS.regular,
-    color: COLORS.note,
+    color: COLORS.NOTE,
     textAlign: 'justify',
     marginTop: 24,
   }
