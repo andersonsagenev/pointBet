@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity} from 'react-native';
 
 import { styles } from './styles';
 import { Avatar } from '../../components/Avatar';
-import { useAuth } from '../../hooks/auth';
+import { useAuth } from '../../hooks/AuthContext';
 
 
 

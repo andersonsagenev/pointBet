@@ -11,11 +11,12 @@ import {
 interface BtnSocialProps extends RectButtonProps {
     title: string
     svg: React.FC<SvgProps>
+    onPress: () => void;
 }
-export function BtnSocialLogin({ title, svg: Svg, ...rest }: BtnSocialProps){
+export function BtnSocialLogin({ title, svg: Svg, onPress, ...rest }: BtnSocialProps){
 
     return (
-        <Button>
+        <Button onPress={onPress}>
             <ImageContainer>
                 <Svg />
             </ImageContainer>

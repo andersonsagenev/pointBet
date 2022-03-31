@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { styles } from './styles';
 import { Avatar } from '../../components/Avatar';
-import { useAuth } from '../../hooks/auth';
+import { useAuth } from '../../hooks/AuthContext';
 
 export function Perfil(){
     const { user } = useAuth();

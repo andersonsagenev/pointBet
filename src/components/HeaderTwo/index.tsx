@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 
  import LogoSvg from '../../assets/logo.svg';
  import UserPhoto from '../UserPhoto';
-import { useAuth } from '../../hooks/auth';
+import { useAuth } from '../../hooks/AuthContext';
 
 export function HeaderTwo() {
   const { user, signOut } = useAuth();

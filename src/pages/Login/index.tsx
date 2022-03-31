@@ -9,18 +9,18 @@ import  IlustrationImg  from '../../assets/illustration.png';
 
 import { Background } from '../../components/Background';
 
-import { useAuth } from '../../hooks/auth';
+import { useAuth } from '../../hooks/AuthContext';
 
 
 export function Login(){
 
-const { user, signIn, isSigningIn } = useAuth();
+const { user, isSigningIn } = useAuth();
 
 
 
 async function handleSignIn() {
     try {
-       await signIn();
+     //  await signIn();
     } catch (error) {
      //  Alert.alert(); 
     }

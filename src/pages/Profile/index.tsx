@@ -9,7 +9,7 @@ import { Button } from '../../components/Button';
 
 import { styles } from './styles';
 import { COLORS } from '../../theme';
-import { useAuth } from '../../hooks/auth';
+import { useAuth } from '../../hooks/AuthContext';
 import { BtnColor } from '../../components/BtnColor';
 
 export function Profile() {

@@ -19,7 +19,7 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
- import {useAuth}  from '../../hooks/auth';
+ import {useAuth}  from '../../hooks/AuthContext';
 
 
 export function DrawerContent(props: any) {

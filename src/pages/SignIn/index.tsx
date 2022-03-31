@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { SignInContent } from '../../components/SignInContent';
-import { useAuth } from '../../hooks/auth';
+import { useAuth } from '../../hooks/AuthContext';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import IllustrationSvg from '../../assets/illustration.svg';
 import AppleSvg from '../../assets/apple.svg';
 import GoogleSvg from '../../assets/google.svg';
+import FacebookSvg from '../../assets/facebook.svg';
 import { BtnSocialLogin } from '../../components/BtnSocialLogin';
+
 
 import {
   Container,
@@ -19,6 +20,7 @@ import {
   FooterWrapper
 } from './styles';
 import { View } from 'moti';
+import { Alert } from 'react-native';
 
 interface AuthResponse {
   type: string;
@@ -34,7 +36,7 @@ interface LoginProps {
 
 export function SignIn({ isLoading, errorMessage }: LoginProps) {
 
-  const { user, signInGoogle, signInFacebook, isSigningIn, isSigningInFace } = useAuth();
+  const { user, signInGoogle, signInFacebook, signInApple, isSigningIn } = useAuth();
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -44,7 +46,7 @@ export function SignIn({ isLoading, errorMessage }: LoginProps) {
     try {
       await signInGoogle();
     } catch (error) {
-      //  Alert.alert(); 
+        Alert.alert('Não foi possível autenticar'); 
     }
   }
 
@@ -91,13 +93,19 @@ export function SignIn({ isLoading, errorMessage }: LoginProps) {
           <BtnSocialLogin
             title="Entrar com Google"
             svg={GoogleSvg}
-            onPress={() => console.log('Google')}
+            onPress={handleSignInGoogle}
           />
 
           <BtnSocialLogin
             title="Entrar com Apple"
             svg={AppleSvg}
-            onPress={() => console.log('Apple')}
+            onPress={signInApple}
+          />
+
+          <BtnSocialLogin
+            title="Entrar com Facebook"
+            svg={FacebookSvg}
+            onPress={handleSignInFacebook}
           />
 
         </FooterWrapper>

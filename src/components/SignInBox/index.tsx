@@ -5,7 +5,7 @@ import { styles } from './styles';
 import { BtnColor } from '../BtnColor'
 import { COLORS } from '../../theme';
 
-import { useAuth } from '../../hooks/auth';
+import { useAuth } from '../../hooks/AuthContext';
 
 // type Props = TouchableOpacityProps & {
 //     title: string;

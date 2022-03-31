@@ -3,7 +3,7 @@ import 'react-native-gesture-handler';
 import 'intl';
 import 'intl/locale-data/jsonp/pt-BR';
 import React from 'react';
-import { AuthProvider } from './src/hooks/auth';
+import { AuthProvider } from './src/hooks/AuthContext';
 import { Routes } from './src/routes';
 import { StatusBar } from 'react-native';
 import { useFonts } from 'expo-font';
