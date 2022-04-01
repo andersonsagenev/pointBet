@@ -9,6 +9,9 @@ import { TransactionTypeButton } from '../../components/Forms/TransactionTypeBut
 import { CategorySelectButton } from '../../components/Forms/CategorySelectButton';
 import { CategorySelect } from '../../pages/CategorySelect/';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../hooks/AuthContext';
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { 
     Container, 
     Form, 
@@ -17,8 +20,6 @@ import {
     Fields, 
     TransactionsType
  } from './styles';
- import * as Yup from 'yup';
- import { yupResolver } from '@hookform/resolvers/yup';
 
 // interface FormData {
 //     name: string;
@@ -38,7 +39,8 @@ const schema = Yup.object().shape({
 }).required()
 
 export function Register(props: any) {
-    const dataKey = '@gofinance:transactions';
+    const { user } = useAuth();
+    const dataKey = `@gofinance:transactions_user:${user.id}`;
     const [TransactionType, setTransactionType] = useState('');
     const [category, setCategory] = useState({
         key: 'category',

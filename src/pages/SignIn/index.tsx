@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 import { useAuth } from '../../hooks/AuthContext';
 import { RFValue } from 'react-native-responsive-fontsize';
 
@@ -8,7 +7,8 @@ import AppleSvg from '../../assets/apple.svg';
 import GoogleSvg from '../../assets/google.svg';
 import FacebookSvg from '../../assets/facebook.svg';
 import { BtnSocialLogin } from '../../components/BtnSocialLogin';
-
+import { Alert, Platform } from 'react-native';
+import Load from '../../components/Load';
 
 import {
   Container,
@@ -19,8 +19,6 @@ import {
   Footer,
   FooterWrapper
 } from './styles';
-import { View } from 'moti';
-import { Alert } from 'react-native';
 
 interface AuthResponse {
   type: string;
@@ -29,32 +27,46 @@ interface AuthResponse {
   }
 }
 
-interface LoginProps {
-  isLoading: boolean,
-  errorMessage: string
-}
+// interface LoginProps {
+//   isLoading: boolean,
+//   errorMessage: string
+// }
 
-export function SignIn({ isLoading, errorMessage }: LoginProps) {
+export function SignIn() {
 
-  const { user, signInGoogle, signInFacebook, signInApple, isSigningIn } = useAuth();
-  const navigation = useNavigation();
+  const { signInGoogle, signInFacebook, signInApple } = useAuth();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSignInGoogle() {
     try {
-      await signInGoogle();
+      setIsLoading(true);
+      return await signInGoogle();
     } catch (error) {
-        Alert.alert('Não foi possível autenticar'); 
+      Alert.alert('Não foi possível autenticar com Google');
+      setIsLoading(false);
     }
   }
 
   async function handleSignInFacebook() {
     try {
-      await signInFacebook();
+      setIsLoading(true);
+      return await signInFacebook();
     } catch (error) {
-      //  Alert.alert(); 
+      Alert.alert('Não foi possível autenticar com Facebook');
+      setIsLoading(false);
+    }
+  }
+
+  async function handleSignInApple() {
+    try {
+      setIsLoading(true);
+      return await signInApple();
+    } catch (error) {
+      Alert.alert('Não foi possível autenticar com Apple');
+      setIsLoading(false);
     }
   }
 
@@ -95,20 +107,26 @@ export function SignIn({ isLoading, errorMessage }: LoginProps) {
             svg={GoogleSvg}
             onPress={handleSignInGoogle}
           />
-
-          <BtnSocialLogin
-            title="Entrar com Apple"
-            svg={AppleSvg}
-            onPress={signInApple}
-          />
-
           <BtnSocialLogin
             title="Entrar com Facebook"
             svg={FacebookSvg}
             onPress={handleSignInFacebook}
           />
+          {
+            Platform.OS === "ios" &&
+            <BtnSocialLogin
+              title="Entrar com Apple"
+              svg={AppleSvg}
+              onPress={handleSignInApple}
+            />
+          }
+
 
         </FooterWrapper>
+
+        {
+          isLoading && <Load />
+        }
 
       </Footer>
 

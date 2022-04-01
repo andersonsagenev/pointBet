@@ -2,8 +2,14 @@
 import 'react-native-gesture-handler';
 import 'intl';
 import 'intl/locale-data/jsonp/pt-BR';
+
 import React from 'react';
-import { AuthProvider } from './src/hooks/AuthContext';
+import AppLoading from 'expo-app-loading';
+import theme from './src/global/styles/theme';
+import 'react-native-reanimated';
+import { ThemeProvider } from 'styled-components';
+
+import { AuthProvider, useAuth } from './src/hooks/AuthContext';
 import { Routes } from './src/routes';
 import { StatusBar } from 'react-native';
 import { useFonts } from 'expo-font';
@@ -11,12 +17,6 @@ import { Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
 import { Rajdhani_500Medium, Rajdhani_700Bold } from '@expo-google-fonts/rajdhani';
 import { Roboto_400Regular, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import { Poppins_400Regular, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
-import AppLoading from 'expo-app-loading';
-import 'react-native-reanimated';
-import { Background } from './src/components/Background';
-import { ThemeProvider } from 'styled-components';
-import theme from './src/global/styles/theme';
-
 export default function App() {
   const [fontsLoaded] = useFonts({
     Inter_400Regular,
@@ -30,7 +30,9 @@ export default function App() {
     Poppins_700Bold
   });
 
-  if (!fontsLoaded) {
+  const { isSigningIn } = useAuth();
+
+  if (!fontsLoaded || isSigningIn) {
     return <AppLoading />
   }
 

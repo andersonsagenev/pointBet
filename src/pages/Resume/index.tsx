@@ -8,6 +8,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { VictoryPie } from 'victory-native';
 import { useTheme } from 'styled-components/native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { useAuth } from '../../hooks/AuthContext';
 import { Load } from '../../components/Load';
 
 import {
@@ -22,7 +24,6 @@ import {
     Month
 
 } from './styles';
-import { RFValue } from 'react-native-responsive-fontsize';
 
 interface TransactionData {
     type: 'positive' | 'negative';
@@ -45,6 +46,7 @@ export function Resume() {
     const [totalByCategories, setTotalByCategories] = useState<CategoryData[]>([])
     const theme = useTheme();
     const [isLoading, setIsLoading] = useState(false);
+    const { user } = useAuth();
 
     function handleDateChange(action: 'next' | 'previus') {
         setIsLoading(true);
@@ -60,7 +62,7 @@ export function Resume() {
 
     async function loadData() {
         setIsLoading(true);
-        const dataKey = '@gofinance:transactions';
+        const dataKey = `@gofinance:transactions_user:${user.id}`;
         const storageTransactions = await AsyncStorage.getItem(dataKey);
         const responseFormatted = storageTransactions ? JSON.parse(storageTransactions) : [];
 

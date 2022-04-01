@@ -38,7 +38,7 @@ type UserFacebook = {
 };
 
 type AuthContextData = {
-  user: User | null;
+  user: User;
   isSigningIn: boolean;
   signInGoogle: () => Promise<void>;
   signInApple: () => Promise<void>;
@@ -63,9 +63,10 @@ type AuthorizationResponse = {
 export const AuthContext = createContext({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [userFacebook, setUserFacebook] = useState<UserFacebook | null>(null);
+  const [user, setUser] = useState<User>({} as User);
   const [isSigningIn, setIsSigningIn] = useState(false);
+
+  const userStorageKey = "@Auth:user";
  
 
   async function signInGoogle() {
@@ -130,7 +131,6 @@ function AuthProvider({ children }: AuthProviderProps) {
       setIsSigningIn(false);
     }
   }
-
   async function signInFacebook() {
     try {
       setIsSigningIn(true);
@@ -163,16 +163,17 @@ function AuthProvider({ children }: AuthProviderProps) {
       setIsSigningIn(false);
     }
   }
-
   async function signOut() {
-    AsyncStorage.clear().then(() => {
-      setUser(null);
-    });
+    await AsyncStorage.removeItem(userStorageKey);
+    setUser({} as User);
+    // AsyncStorage.clear().then(() => {
+    //   setUser({} as User);
+    // });
   }
 
   useEffect(() => {
     async function loadUserStorageData() {
-      const storageUser = await AsyncStorage.getItem("@Auth:user");
+      const storageUser = await AsyncStorage.getItem(userStorageKey);
       //   const tokenStorage = await AsyncStorage.getItem(TOKEN_STORAGE);
 
       if (storageUser) {

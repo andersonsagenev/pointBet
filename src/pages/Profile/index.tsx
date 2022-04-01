@@ -55,7 +55,7 @@ export function Profile() {
               Nome
             </Text>
             <Text style={styles.text}>
-              {user?.given_name}
+              {user?.name}
             </Text>
           </View>
 
@@ -69,7 +69,7 @@ export function Profile() {
               Sobrenome
             </Text>
             <Text style={styles.text}>
-              {user?.family_name}
+              {user?.name}
             </Text>
           </View>
         </View>
@@ -82,7 +82,7 @@ export function Profile() {
           />
 
           <Text style={styles.localeText}>
-            Localidade do perfil do usuário: {user?.locale}
+            Localidade do perfil do usuário: BR
           </Text>
         </View>
 
